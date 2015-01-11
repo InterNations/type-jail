@@ -7,6 +7,7 @@ use InterNations\Component\TypePolice\Exception\ExceptionInterface;
 use InterNations\Component\TypePolice\Exception\HierarchyException;
 use InterNations\Component\TypePolice\Exception\InvalidArgumentException;
 use InterNations\Component\TypePolice\Factory\PolicedProxyFactory;
+use InterNations\Component\TypePolice\Factory\PolicedProxyFactoryInterface;
 use InterNations\Component\TypePolice\Tests\Fixtures\AbstractBaseClass;
 use InterNations\Component\TypePolice\Tests\Fixtures\AbstractBaseClass1;
 use InterNations\Component\TypePolice\Tests\Fixtures\AbstractBaseClass2;
@@ -22,7 +23,7 @@ use stdClass;
 
 class PolicedProxyFactoryTest extends AbstractTestCase
 {
-    /** @var PolicedProxyFactory */
+    /** @var PolicedProxyFactoryInterface */
     private $factory;
 
     public function setUp()
