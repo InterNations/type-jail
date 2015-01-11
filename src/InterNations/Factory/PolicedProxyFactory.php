@@ -2,7 +2,6 @@
 namespace InterNations\Component\TypePolice\Factory;
 
 use InterNations\Component\TypePolice\Exception\BadMethodCallException;
-use InterNations\Component\TypePolice\Exception\ExceptionInterface;
 use InterNations\Component\TypePolice\Exception\HierarchyException;
 use InterNations\Component\TypePolice\Exception\InvalidArgumentException;
 use InterNations\Component\TypePolice\Util\TypeUtil;
