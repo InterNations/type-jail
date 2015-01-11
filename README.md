@@ -13,4 +13,13 @@ $file = new SplFileObject(__FILE__);
 
 $factory = new PolicedProxyFactory();
 $file = $factory->policeInstance($file, 'SplFileInfo');
+
+// Will return the file path
+$file->getFilePath();
+
+// Will throw an exception indicating a type violation
+$file->flock();
 ```
+
+## Acknowledgement
+Standing on the shoulders of [ocramius/proxy-manager](https://github.com/Ocramius/ProxyManager/) by Marco Pivetta that makes it super-duper easy to work with proxies.
