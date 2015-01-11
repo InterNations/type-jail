@@ -40,14 +40,11 @@ class PolicedProxyFactory extends AbstractBaseFactory implements PolicedProxyFac
             throw BadMethodCallException::policedMethod($method, get_class($instance), $class);
         };
 
-        $prefixInterceptors = [];
-        foreach ($prohibitedMethods as $method) {
-            $prefixInterceptors[$method] = $deny;
-        }
-
         $proxyClassName = $this->generateProxy(get_class($instance));
-
-        return new $proxyClassName($instance, $prefixInterceptors);
+        return new $proxyClassName(
+            $instance,
+            array_combine($prohibitedMethods, array_fill(0, count($prohibitedMethods), $deny))
+        );
     }
 
     public function policeAggregate($instanceAggregate, $class)
