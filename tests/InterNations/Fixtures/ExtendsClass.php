@@ -32,16 +32,4 @@ class ExtendsClass extends AbstractBaseClass
     {
         return __FUNCTION__;
     }
-
-    public function __call($method, array $arguments)
-    {
-    }
-
-    public function __get($property)
-    {
-    }
-
-    public function __set($property, $value)
-    {
-    }
 }

@@ -95,6 +95,7 @@ class PolicedProxyFactoryTest extends AbstractTestCase
     public function testPolicingScenarios($instance, $class, array $allowedMethods, array $policedMethods)
     {
         $proxy = $this->factory->policeInstance($instance, $class);
+        $this->assertInternalType('object', $proxy);
         $this->assertMethodsCalls($proxy, $allowedMethods, $policedMethods);
     }
 
