@@ -1,0 +1,25 @@
+{
+    "name": "internations/type-police",
+    "description": "Enforce type constraints",
+    "require": {
+        "ocramius/proxy-manager": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4",
+        "internations/testing-component": "*",
+        "internations/kodierungsregelwerksammlung": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lars Strojny",
+            "email": "lars.strojny@internations.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "InterNations\\Component\\TypePolice\\": "src/InterNations",
+            "InterNations\\Component\\TypePolice\\Tests\\": "tests/InterNations"
+        }
+    }
+}
