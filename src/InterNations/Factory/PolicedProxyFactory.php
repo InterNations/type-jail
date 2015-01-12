@@ -43,7 +43,9 @@ class PolicedProxyFactory extends AbstractBaseFactory implements PolicedProxyFac
         $proxyClassName = $this->generateProxy(get_class($instance));
         return new $proxyClassName(
             $instance,
-            array_combine($prohibitedMethods, array_fill(0, count($prohibitedMethods), $deny))
+            count($prohibitedMethods) > 0
+                ? array_combine($prohibitedMethods, array_fill(0, count($prohibitedMethods), $deny))
+                : []
         );
     }
 
