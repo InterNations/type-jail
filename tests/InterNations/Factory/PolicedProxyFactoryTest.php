@@ -44,7 +44,7 @@ class PolicedProxyFactoryTest extends AbstractTestCase
                 new ExtendsClass(),
                 AbstractBaseClass::class,
                 ['baseMethod', 'abstractBaseMethod', 'staticBaseMethod'],
-                ['extendedMethod', 'extendedStaticMethod']
+                ['extendedMethod']
             ],
             [
                 new ClassImplementsInterface(),

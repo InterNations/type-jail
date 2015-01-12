@@ -32,7 +32,7 @@ class MethodSeparatorTest extends AbstractTestCase
                 ExtendsClass::class,
                 AbstractBaseClass::class,
                 [
-                    ['__call', '__get', '__set', 'extendedMethod'],
+                    ['extendedMethod'],
                     ['abstractBaseMethod', 'baseMethod', 'staticBaseMethod'],
                 ]
             ],
