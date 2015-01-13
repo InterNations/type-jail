@@ -1,10 +1,10 @@
 <?php
 namespace InterNations\Component\TypePolice\Factory;
 
-use ProxyManager\ProxyGenerator\AccessInterceptorValueHolderGenerator;
+use InterNations\Component\TypePolice\Generator\PolicedSuperProxyGenerator;
 use ReflectionClass;
 
-class PolicedProxyFactory extends AbstractProxyFactory
+class PolicedSuperProxyFactory extends AbstractProxyFactory
 {
     protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass)
     {
@@ -13,11 +13,11 @@ class PolicedProxyFactory extends AbstractProxyFactory
 
     protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass)
     {
-        return $class->getName();
+        return 'PolicedSuperType' . hash('sha256', $class->getName() . '\\__SURROGATE__\\' . $superClass->getName());
     }
 
     protected function getGenerator()
     {
-        return $this->generator ?: $this->generator = new AccessInterceptorValueHolderGenerator();
+        return $this->generator ?: $this->generator = new PolicedSuperProxyGenerator();
     }
 }

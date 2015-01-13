@@ -28,7 +28,7 @@ use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\MethodGenerator;
 use Zend\Code\Reflection\MethodReflection;
 
-class PolicedProxyGenerator implements ProxyGeneratorInterface
+class PolicedSuperProxyGenerator implements ProxyGeneratorInterface
 {
     public function generate(
         ReflectionClass $originalClass,

@@ -4,7 +4,7 @@ namespace InterNations\Component\TypePolice\Factory;
 use InterNations\Component\TypePolice\Exception\ExceptionInterface;
 use InterNations\Component\TypePolice\Exception\HierarchyException;
 
-interface PolicedProxyFactoryInterface
+interface ProxyFactoryInterface
 {
     /**
      * Police single instance

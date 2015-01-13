@@ -7,17 +7,49 @@ Enforce super type contract of an object
 ## Usage
 
 ```php
+use InterNations\Component\TypePolice\Factory\SuperProxyFactory;
 use InterNations\Component\TypePolice\Factory\PolicedProxyFactory;
+use InterNations\Component\TypePolice\Factory\PolicedSuperProxyFactory;
 
 $file = new SplFileObject(__FILE__);
 
+
 $factory = new PolicedProxyFactory();
 $file = $factory->policeInstance($file, 'SplFileInfo');
+
+// Will return true
+var_dump($file instanceof SplFileInfo);
 
 // Will return the file path
 $file->getFilePath();
 
 // Will throw an exception indicating a type violation
+$file->flock();
+
+
+$factory = new PolicedSuperProxyFactory();
+$file = $factory->policeInstance($file, 'SplFileInfo');
+
+// Will return false
+var_dump($file instanceof SplFileInfo);
+
+// Will return the file path
+$file->getFilePath();
+
+// Will throw an exception indicating a type violation
+$file->flock();
+
+
+$factory = new SuperProxyFactory();
+$file = $factory->policeInstance($file, 'SplFileInfo');
+
+// Will return false
+var_dump($file instanceof SplFileInfo);
+
+// Will return the file path
+$file->getFilePath();
+
+// Will yield a method not found fatal error
 $file->flock();
 ```
 
