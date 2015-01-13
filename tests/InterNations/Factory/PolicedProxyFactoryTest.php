@@ -3,7 +3,7 @@ namespace InterNations\Component\TypePolice\Tests\Factory;
 
 use InterNations\Component\TypePolice\Factory\PolicedProxyFactory;
 
-class ProxyFactoryTest extends AbstractProxyFactoryTest
+class PolicedProxyFactoryTest extends AbstractProxyFactoryTest
 {
     public function setUp()
     {
