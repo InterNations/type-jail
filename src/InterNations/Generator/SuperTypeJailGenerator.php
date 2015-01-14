@@ -67,27 +67,5 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
         $classGenerator->addMethodFromGenerator(new GetWrappedValueHolderValue($valueHolder));
         $classGenerator->addMethodFromGenerator(new SetMethodPrefixInterceptor($prefixInterceptors));
         $classGenerator->addMethodFromGenerator(new SetMethodSuffixInterceptor($suffixInterceptors));
-
-        $classGenerator->addMethodFromGenerator(
-            new MagicGet($originalClass, $valueHolder, $prefixInterceptors, $suffixInterceptors, $publicProperties)
-        );
-
-        $classGenerator->addMethodFromGenerator(
-            new MagicSet($originalClass, $valueHolder, $prefixInterceptors, $suffixInterceptors, $publicProperties)
-        );
-
-        $classGenerator->addMethodFromGenerator(
-            new MagicIsset($originalClass, $valueHolder, $prefixInterceptors, $suffixInterceptors, $publicProperties)
-        );
-
-        $classGenerator->addMethodFromGenerator(
-            new MagicUnset($originalClass, $valueHolder, $prefixInterceptors, $suffixInterceptors, $publicProperties)
-        );
-
-        $classGenerator->addMethodFromGenerator(
-            new MagicClone($originalClass, $valueHolder, $prefixInterceptors, $suffixInterceptors)
-        );
-        $classGenerator->addMethodFromGenerator(new MagicSleep($originalClass, $valueHolder));
-        $classGenerator->addMethodFromGenerator(new MagicWakeup($originalClass, $valueHolder));
     }
 }
