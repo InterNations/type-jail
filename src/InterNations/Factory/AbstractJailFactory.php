@@ -1,7 +1,7 @@
 <?php
 namespace InterNations\Component\TypeJail\Factory;
 
-use InterNations\Component\TypeJail\Exception\BadMethodCallException;
+use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Exception\HierarchyException;
 use InterNations\Component\TypeJail\Exception\InvalidArgumentException;
 use InterNations\Component\TypeJail\Util\TypeUtil;
@@ -53,7 +53,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         list($prohibitedMethods) = $this->getMethodSeparator()->separateMethods($instanceClass, $superClass);
 
         $deny = static function ($proxy, $instance, $method, $params, &$returnEarly) use ($class) {
-            throw BadMethodCallException::jailedMethod($method, get_class($instance), $class);
+            throw JailException::jailedMethod($method, get_class($instance), $class);
         };
 
         $proxyClassName = $this->generateProxyForSuperClass($instanceClass, $superClass);
@@ -100,7 +100,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         $proxyClassName = $this
             ->configuration
             ->getClassNameInflector()
-            ->getProxyClassName($surrogateClassName, $proxyParameters);
+            ->getProxyClassName($class->getName(), $proxyParameters);
 
         if (!class_exists($proxyClassName)) {
             $baseClass = $this->getBaseClass($class, $superClass);

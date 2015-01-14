@@ -1,16 +1,15 @@
 <?php
 namespace InterNations\Component\TypeJail\Exception;
 
-use BadMethodCallException as BaseBadMethodCallException;
 use ReflectionClass;
 
-class BadMethodCallException extends BaseBadMethodCallException implements ExceptionInterface
+class JailException extends RuntimeException
 {
     /**
      * @param string $methodName
      * @param string $class
      * @param string $proxyClass
-     * @return BadMethodCallException
+     * @return JailException
      */
     public static function jailedMethod($methodName, $class, $proxyClass)
     {

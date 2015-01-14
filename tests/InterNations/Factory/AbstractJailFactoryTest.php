@@ -2,7 +2,7 @@
 namespace InterNations\Component\TypeJail\Tests\Factory;
 
 use ArrayIterator;
-use InterNations\Component\TypeJail\Exception\BadMethodCallException;
+use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Exception\ExceptionInterface;
 use InterNations\Component\TypeJail\Exception\HierarchyException;
 use InterNations\Component\TypeJail\Exception\InvalidArgumentException;
@@ -24,9 +24,6 @@ use stdClass;
 
 abstract class AbstractJailFactoryTest extends AbstractTestCase
 {
-    /** @var Configuration */
-    private $configuration;
-
     /** @var JailFactoryInterface */
     protected $factory;
 
@@ -228,7 +225,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
         try {
             $proxy->{$method}();
             $this->fail('Expected exception');
-        } catch (BadMethodCallException $e) {
+        } catch (JailException $e) {
             $this->assertInstanceOf(ExceptionInterface::class, $e);
         }
     }
