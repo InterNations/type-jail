@@ -23,7 +23,8 @@ var_dump($file instanceof SplFileInfo);
 // Will return the file path because that method is declared in SplFileInfo
 $file->getFilePath();
 
-// Will throw an exception indicating a type violation because that method is declared in SplFileObject
+// Will throw an exception indicating a type violation because that method
+// is declared in SplFileObject
 $file->flock();
 
 
@@ -36,7 +37,8 @@ var_dump($file instanceof SplFileInfo);
 // Will return the file path because that method is declared in SplFileInfo
 $file->getFilePath();
 
-// Will throw an exception indicating a type violation because that method is declared in SplFileObject
+// Will throw an exception indicating a type violation because that method
+// is declared in SplFileObject
 $file->flock();
 
 
