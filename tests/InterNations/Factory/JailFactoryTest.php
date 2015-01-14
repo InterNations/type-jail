@@ -7,7 +7,7 @@ class JailFactoryTest extends AbstractJailFactoryTest
 {
     public function setUp()
     {
-        $this->factory = new JailFactory();
+        $this->factory = new JailFactory($this->getConfiguration());
     }
 
     protected function assertProxyInstanceOf($proxy, $baseClass, $superClass)

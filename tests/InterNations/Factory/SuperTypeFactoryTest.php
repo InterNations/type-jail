@@ -7,7 +7,7 @@ class SuperTypeFactoryTest extends AbstractJailFactoryTest
 {
     public function setUp()
     {
-        $this->factory = new SuperTypeFactory();
+        $this->factory = new SuperTypeFactory($this->getConfiguration());
     }
 
     protected function assertJailedMethod($proxy, $method)

@@ -9,11 +9,12 @@ use ProxyManager\Configuration;
 use ProxyManager\Generator\ClassGenerator;
 use ProxyManager\ProxyGenerator\AccessInterceptorValueHolderGenerator;
 use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
-use ProxyManager\Version;
 use ReflectionClass;
 
 abstract class AbstractJailFactory implements JailFactoryInterface
 {
+    const VERSION = '0.1.0';
+
     /** @var array */
     private $checkedClasses = [];
 
@@ -52,8 +53,8 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         list($prohibitedMethods) = $this->getMethodSeparator()->separateMethods($instanceClass, $superClass);
 
         $deny = static function ($proxy, $instance, $method, $params, &$returnEarly) use ($class) {
-        throw BadMethodCallException::jailedMethod($method, get_class($instance), $class);
-    };
+            throw BadMethodCallException::jailedMethod($method, get_class($instance), $class);
+        };
 
         $proxyClassName = $this->generateProxyForSuperClass($instanceClass, $superClass);
         return new $proxyClassName(
@@ -85,33 +86,28 @@ abstract class AbstractJailFactory implements JailFactoryInterface
 
     private function generateProxyForSuperClass(ReflectionClass $class, ReflectionClass $superClass)
     {
-        $cacheKey = $this->getSurrogateClassName($class, $superClass);
+        $surrogateClassName = $this->getSurrogateClassName($class, $superClass);
 
-        if (isset($this->checkedClasses[$cacheKey])) {
-            return $this->checkedClasses[$cacheKey];
+        if (isset($this->checkedClasses[$surrogateClassName])) {
+            return $this->checkedClasses[$surrogateClassName];
         }
 
         $proxyParameters = [
-            'cacheKey'           => $cacheKey,
-            'factory'             => get_class($this),
-            'proxyManagerVersion' => Version::VERSION
+            'cacheKey' => $surrogateClassName,
+            'factory'  => get_class($this),
+            'version'  => static::VERSION,
         ];
         $proxyClassName = $this
             ->configuration
             ->getClassNameInflector()
-            ->getProxyClassName($cacheKey, $proxyParameters);
+            ->getProxyClassName($surrogateClassName, $proxyParameters);
 
         if (!class_exists($proxyClassName)) {
             $baseClass = $this->getBaseClass($class, $superClass);
             $this->generateProxyClass($proxyClassName, $baseClass, $superClass, $proxyParameters);
         }
 
-        $this
-            ->configuration
-            ->getSignatureChecker()
-            ->checkSignature(new ReflectionClass($proxyClassName), $proxyParameters);
-
-        return $this->checkedClasses[$cacheKey] = $proxyClassName;
+        return $this->checkedClasses[$surrogateClassName] = $proxyClassName;
     }
 
     /**
@@ -142,8 +138,6 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         $phpClass = new ClassGenerator($proxyClassName);
 
         $this->getGenerator()->generate(new ReflectionClass($className), $phpClass, $superClass);
-
-        $phpClass = $this->configuration->getClassSignatureGenerator()->addSignature($phpClass, $proxyParameters);
 
         $this->configuration->getGeneratorStrategy()->generate($phpClass);
         $this->configuration->getProxyAutoloader()->__invoke($proxyClassName);

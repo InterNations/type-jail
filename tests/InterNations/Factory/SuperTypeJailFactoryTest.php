@@ -7,6 +7,6 @@ class SuperTypeJailFactoryTest extends AbstractJailFactoryTest
 {
     public function setUp()
     {
-        $this->factory = new SuperTypeJailFactory();
+        $this->factory = new SuperTypeJailFactory($this->getConfiguration());
     }
 }
