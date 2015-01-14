@@ -1,5 +1,5 @@
 {
-    "name": "internations/type-police",
+    "name": "internations/type-jail",
     "description": "Enforce type constraints",
     "require": {
         "ocramius/proxy-manager": "~1.0"
@@ -18,8 +18,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "InterNations\\Component\\TypePolice\\": "src/InterNations",
-            "InterNations\\Component\\TypePolice\\Tests\\": "tests/InterNations"
+            "InterNations\\Component\\TypeJail\\": "src/InterNations"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "InterNations\\Component\\TypeJail\\Tests\\Fixtures\\": "tests/InterNations/Fixtures"
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
-namespace InterNations\Component\TypePolice\Exception;
+namespace InterNations\Component\TypeJail\Exception;
 
-use InterNations\Component\TypePolice\Util\TypeUtil;
+use InterNations\Component\TypeJail\Util\TypeUtil;
 use ReflectionClass;
 
 class HierarchyException extends RuntimeException
@@ -10,7 +10,7 @@ class HierarchyException extends RuntimeException
     {
         return new static(
             sprintf(
-                'Cannot create policed proxy for "%1$s" as "%2$s" is not part of the inheritance hierarchy of "%1$s". '
+                'Cannot create proxy for "%1$s" as "%2$s" is not part of the inheritance hierarchy of "%1$s". '
                 . 'Valid supertypes are: "%3$s"',
                 $class->getName(),
                 $superClass->getName(),

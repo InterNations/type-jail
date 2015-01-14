@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\TypePolice\Exception;
+namespace InterNations\Component\TypeJail\Exception;
 
 use InvalidArgumentException as BaseInvalidArgumentException;
 

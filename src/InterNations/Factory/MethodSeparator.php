@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\TypePolice\Factory;
+namespace InterNations\Component\TypeJail\Factory;
 
 use ReflectionClass;
 use ReflectionMethod;

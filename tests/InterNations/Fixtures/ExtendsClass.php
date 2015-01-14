@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\TypePolice\Tests\Fixtures;
+namespace InterNations\Component\TypeJail\Tests\Fixtures;
 
 abstract class AbstractBaseClass
 {

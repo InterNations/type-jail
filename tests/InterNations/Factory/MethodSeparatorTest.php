@@ -1,12 +1,12 @@
 <?php
-namespace InterNations\Component\TypePolice\Tests\Factory;
+namespace InterNations\Component\TypeJail\Tests\Factory;
 
-use InterNations\Component\TypePolice\Factory\MethodSeparator;
-use InterNations\Component\TypePolice\Tests\Fixtures\BaseClass;
-use InterNations\Component\TypePolice\Tests\Fixtures\ClassImplementsInterface;
-use InterNations\Component\TypePolice\Tests\Fixtures\AbstractBaseClass;
-use InterNations\Component\TypePolice\Tests\Fixtures\ExtendsClass;
-use InterNations\Component\TypePolice\Tests\Fixtures\InterfaceForClass;
+use InterNations\Component\TypeJail\Factory\MethodSeparator;
+use InterNations\Component\TypeJail\Tests\Fixtures\BaseClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\ClassImplementsInterface;
+use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForClass;
 use InterNations\Component\Testing\AbstractTestCase;
 use ReflectionClass;
 

@@ -1,10 +1,10 @@
 <?php
-namespace InterNations\Component\TypePolice\Factory;
+namespace InterNations\Component\TypeJail\Factory;
 
-use InterNations\Component\TypePolice\Exception\BadMethodCallException;
-use InterNations\Component\TypePolice\Exception\HierarchyException;
-use InterNations\Component\TypePolice\Exception\InvalidArgumentException;
-use InterNations\Component\TypePolice\Util\TypeUtil;
+use InterNations\Component\TypeJail\Exception\BadMethodCallException;
+use InterNations\Component\TypeJail\Exception\HierarchyException;
+use InterNations\Component\TypeJail\Exception\InvalidArgumentException;
+use InterNations\Component\TypeJail\Util\TypeUtil;
 use ProxyManager\Configuration;
 use ProxyManager\Generator\ClassGenerator;
 use ProxyManager\ProxyGenerator\AccessInterceptorValueHolderGenerator;
@@ -12,7 +12,7 @@ use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
 use ProxyManager\Version;
 use ReflectionClass;
 
-abstract class AbstractProxyFactory implements ProxyFactoryInterface
+abstract class AbstractJailFactory implements JailFactoryInterface
 {
     /** @var array */
     private $checkedClasses = [];
@@ -32,7 +32,7 @@ abstract class AbstractProxyFactory implements ProxyFactoryInterface
         $this->configuration = $configuration ?: new Configuration();
     }
 
-    public function policeInstance($instance, $class)
+    public function createInstanceJail($instance, $class)
     {
         if (!is_object($instance)) {
             throw InvalidArgumentException::invalidType($instance, 'object');
@@ -52,7 +52,7 @@ abstract class AbstractProxyFactory implements ProxyFactoryInterface
         list($prohibitedMethods) = $this->getMethodSeparator()->separateMethods($instanceClass, $superClass);
 
         $deny = static function ($proxy, $instance, $method, $params, &$returnEarly) use ($class) {
-        throw BadMethodCallException::policedMethod($method, get_class($instance), $class);
+        throw BadMethodCallException::jailedMethod($method, get_class($instance), $class);
     };
 
         $proxyClassName = $this->generateProxyForSuperClass($instanceClass, $superClass);
@@ -64,7 +64,7 @@ abstract class AbstractProxyFactory implements ProxyFactoryInterface
         );
     }
 
-    public function policeAggregate($instanceAggregate, $class)
+    public function createAggregateJail($instanceAggregate, $class)
     {
         if (!TypeUtil::isTraversable($instanceAggregate)) {
             throw InvalidArgumentException::invalidType($instanceAggregate, ['array', 'Traversable']);
@@ -77,7 +77,7 @@ abstract class AbstractProxyFactory implements ProxyFactoryInterface
         $proxyAggregate = [];
 
         foreach ($instanceAggregate as $instance) {
-            $proxyAggregate[] = $this->policeInstance($instance, $class);
+            $proxyAggregate[] = $this->createInstanceJail($instance, $class);
         }
 
         return $proxyAggregate;

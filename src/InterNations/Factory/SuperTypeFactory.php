@@ -1,19 +1,19 @@
 <?php
-namespace InterNations\Component\TypePolice\Factory;
+namespace InterNations\Component\TypeJail\Factory;
 
 use ProxyManager\ProxyGenerator\AccessInterceptorValueHolderGenerator;
 use ReflectionClass;
 
-class PolicedProxyFactory extends AbstractProxyFactory
+class SuperTypeFactory extends AbstractJailFactory
 {
     protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass)
     {
-        return $class;
+        return $superClass;
     }
 
     protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass)
     {
-        return $class->getName();
+        return $superClass->getName();
     }
 
     protected function getGenerator()

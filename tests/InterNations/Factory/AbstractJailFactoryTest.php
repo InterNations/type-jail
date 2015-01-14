@@ -1,28 +1,28 @@
 <?php
-namespace InterNations\Component\TypePolice\Tests\Factory;
+namespace InterNations\Component\TypeJail\Tests\Factory;
 
 use ArrayIterator;
-use InterNations\Component\TypePolice\Exception\BadMethodCallException;
-use InterNations\Component\TypePolice\Exception\ExceptionInterface;
-use InterNations\Component\TypePolice\Exception\HierarchyException;
-use InterNations\Component\TypePolice\Exception\InvalidArgumentException;
-use InterNations\Component\TypePolice\Factory\ProxyFactoryInterface;
-use InterNations\Component\TypePolice\Tests\Fixtures\AbstractBaseClass;
-use InterNations\Component\TypePolice\Tests\Fixtures\AbstractBaseClass1;
-use InterNations\Component\TypePolice\Tests\Fixtures\AbstractBaseClass2;
-use InterNations\Component\TypePolice\Tests\Fixtures\BaseClass;
-use InterNations\Component\TypePolice\Tests\Fixtures\ClassImplementsInterface;
-use InterNations\Component\TypePolice\Tests\Fixtures\ExtendsAndImplementsClass;
-use InterNations\Component\TypePolice\Tests\Fixtures\ExtendsAndImplementsInterface1;
-use InterNations\Component\TypePolice\Tests\Fixtures\ExtendsAndImplementsInterface2;
-use InterNations\Component\TypePolice\Tests\Fixtures\ExtendsClass;
-use InterNations\Component\TypePolice\Tests\Fixtures\InterfaceForClass;
+use InterNations\Component\TypeJail\Exception\BadMethodCallException;
+use InterNations\Component\TypeJail\Exception\ExceptionInterface;
+use InterNations\Component\TypeJail\Exception\HierarchyException;
+use InterNations\Component\TypeJail\Exception\InvalidArgumentException;
+use InterNations\Component\TypeJail\Factory\JailFactoryInterface;
+use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass1;
+use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass2;
+use InterNations\Component\TypeJail\Tests\Fixtures\BaseClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\ClassImplementsInterface;
+use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsInterface1;
+use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsInterface2;
+use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForClass;
 use InterNations\Component\Testing\AbstractTestCase;
 use stdClass;
 
-abstract class AbstractProxyFactoryTest extends AbstractTestCase
+abstract class AbstractJailFactoryTest extends AbstractTestCase
 {
-    /** @var ProxyFactoryInterface */
+    /** @var JailFactoryInterface */
     protected $factory;
 
     public static function getInstanceScenarios()
@@ -83,16 +83,16 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
      * @param object $instance
      * @param string $class
      * @param array $allowedMethods
-     * @param array $policedMethods
+     * @param array $jailedMethods
      * @dataProvider getInstanceScenarios
      */
-    public function testPolicingScenarios($instance, $class, array $allowedMethods, array $policedMethods)
+    public function testJailScenarios($instance, $class, array $allowedMethods, array $jailedMethods)
     {
-        $proxy = $this->factory->policeInstance($instance, $class);
+        $proxy = $this->factory->createInstanceJail($instance, $class);
         $this->assertInternalType('object', $proxy);
         $this->assertProxyInstanceOf($proxy, get_class($instance), $class);
 
-        $this->assertMethodsCalls($proxy, $allowedMethods, $policedMethods);
+        $this->assertMethodsCalls($proxy, $allowedMethods, $jailedMethods);
     }
 
     public static function getAggregateScenarios()
@@ -116,14 +116,14 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
      * @param object[] $list
      * @param string $class
      * @param array $allowedMethods
-     * @param array $policedMethods
+     * @param array $jailedMethods
      * @dataProvider getAggregateScenarios
      */
-    public function testPoliceAggregate($list, $class, array $allowedMethods, array $policedMethods)
+    public function testJailAggregate($list, $class, array $allowedMethods, array $jailedMethods)
     {
-        $proxies = $this->factory->policeAggregate($list, $class);
+        $proxies = $this->factory->createAggregateJail($list, $class);
         foreach ($proxies as $proxy) {
-            $this->assertMethodsCalls($proxy, $allowedMethods, $policedMethods);
+            $this->assertMethodsCalls($proxy, $allowedMethods, $jailedMethods);
         }
     }
 
@@ -145,13 +145,13 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
         $this->setExpectedException(
             HierarchyException::class,
             sprintf(
-                'Cannot create policed proxy for "%1$s" as "%2$s" is not part of the inheritance hierarchy of "%1$s". ',
+                'Cannot create proxy for "%1$s" as "%2$s" is not part of the inheritance hierarchy of "%1$s". ',
                 get_class($instance),
                 $class
             )
         );
 
-        $this->factory->policeInstance($instance, $class);
+        $this->factory->createInstanceJail($instance, $class);
     }
 
     public function testInvalidTypeForAggregate()
@@ -160,7 +160,7 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
             InvalidArgumentException::class,
             'Expected type to be one of "array", "Traversable", got "stdClass"'
         );
-        $this->factory->policeAggregate(new stdClass(), stdClass::class);
+        $this->factory->createAggregateJail(new stdClass(), stdClass::class);
     }
 
     public function testInvalidTypeForAggregateClass()
@@ -169,7 +169,7 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
             InvalidArgumentException::class,
             'Expected type to be "string", got "array"'
         );
-        $this->factory->policeAggregate([], []);
+        $this->factory->createAggregateJail([], []);
     }
 
     public function testInvalidTypeForSingleInstance()
@@ -178,7 +178,7 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
             InvalidArgumentException::class,
             'Expected type to be "object", got "array"'
         );
-        $this->factory->policeInstance([], stdClass::class);
+        $this->factory->createInstanceJail([], stdClass::class);
     }
 
     public function testInvalidTypeForSingleInstanceClass()
@@ -187,17 +187,17 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
             InvalidArgumentException::class,
             'Expected type to be "string", got "array"'
         );
-        $this->factory->policeInstance(new stdClass(), []);
+        $this->factory->createInstanceJail(new stdClass(), []);
     }
 
-    private function assertMethodsCalls($proxy, array $allowedMethods, array $policedMethods)
+    private function assertMethodsCalls($proxy, array $allowedMethods, array $jailedMethods)
     {
         foreach ($allowedMethods as $allowedMethod) {
             $this->assertSame($allowedMethod, $proxy->{$allowedMethod}());
         }
 
-        foreach ($policedMethods as $policedMethod) {
-            $this->assertPolicedMethod($proxy, $policedMethod);
+        foreach ($jailedMethods as $jailedMethod) {
+            $this->assertJailedMethod($proxy, $jailedMethod);
         }
     }
 
@@ -210,7 +210,7 @@ abstract class AbstractProxyFactoryTest extends AbstractTestCase
         }
     }
 
-    protected function assertPolicedMethod($proxy, $method)
+    protected function assertJailedMethod($proxy, $method)
     {
         try {
             $proxy->{$method}();

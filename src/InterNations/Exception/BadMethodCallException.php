@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\TypePolice\Exception;
+namespace InterNations\Component\TypeJail\Exception;
 
 use BadMethodCallException as BaseBadMethodCallException;
 use ReflectionClass;
@@ -12,11 +12,11 @@ class BadMethodCallException extends BaseBadMethodCallException implements Excep
      * @param string $proxyClass
      * @return BadMethodCallException
      */
-    public static function policedMethod($methodName, $class, $proxyClass)
+    public static function jailedMethod($methodName, $class, $proxyClass)
     {
         return new static(
             sprintf(
-                'Policed method "%s::%s()" invoked on proxy restricted to "%s". '
+                'Jailed method "%s::%s()" invoked on proxy restricted to "%s". '
                 . 'Check file "%s" to find out which method calls are allowed',
                 $class,
                 $methodName,

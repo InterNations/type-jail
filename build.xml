@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="TypePoliceBundle" default="build">
+<project name="TypeJail" default="build">
     <target name="build" description="Run CI jobs" depends="clean,prepare,phpunit,phpcs"/>
 
     <target name="clean">
@@ -11,9 +11,9 @@
     <target name="prepare">
         <get src="http://getcomposer.org/composer.phar" dest="build/composer.phar"/>
         <exec executable="php" failonerror="true">
-            <arg value="build/composer.phar"/> 
-            <arg value="install"/> 
-            <arg value="--dev"/> 
+            <arg value="build/composer.phar"/>
+            <arg value="install"/>
+            <arg value="--dev"/>
         </exec>
     </target>
 

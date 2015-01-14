@@ -1,6 +1,5 @@
 <?php
-namespace InterNations\Component\TypePolice\Generator;
-
+namespace InterNations\Component\TypeJail\Generator;
 
 use ProxyManager\Generator\Util\ClassGeneratorUtils;
 use ProxyManager\ProxyGenerator\AccessInterceptor\MethodGenerator\MagicWakeup;
@@ -28,7 +27,7 @@ use Zend\Code\Generator\ClassGenerator;
 use Zend\Code\Generator\MethodGenerator;
 use Zend\Code\Reflection\MethodReflection;
 
-class PolicedSuperProxyGenerator implements ProxyGeneratorInterface
+class SuperTypeJailGenerator implements ProxyGeneratorInterface
 {
     public function generate(
         ReflectionClass $originalClass,

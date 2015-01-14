@@ -1,13 +1,13 @@
 <?php
-namespace InterNations\Component\TypePolice\Tests\Factory;
+namespace InterNations\Component\TypeJail\Tests\Factory;
 
-use InterNations\Component\TypePolice\Factory\PolicedProxyFactory;
+use InterNations\Component\TypeJail\Factory\JailFactory;
 
-class PolicedProxyFactoryTest extends AbstractProxyFactoryTest
+class JailFactoryTest extends AbstractJailFactoryTest
 {
     public function setUp()
     {
-        $this->factory = new PolicedProxyFactory();
+        $this->factory = new JailFactory();
     }
 
     protected function assertProxyInstanceOf($proxy, $baseClass, $superClass)

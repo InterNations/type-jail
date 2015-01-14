@@ -1,5 +1,5 @@
 <?php
-namespace InterNations\Component\TypePolice\Util;
+namespace InterNations\Component\TypeJail\Util;
 
 use ReflectionClass;
 use Traversable;
