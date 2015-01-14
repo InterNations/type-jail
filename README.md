@@ -20,10 +20,10 @@ $file = $factory->createInstanceJail($file, 'SplFileInfo');
 // Will return true
 var_dump($file instanceof SplFileInfo);
 
-// Will return the file path
+// Will return the file path because that method is declared in SplFileInfo
 $file->getFilePath();
 
-// Will throw an exception indicating a type violation
+// Will throw an exception indicating a type violation because that method is declared in SplFileObject
 $file->flock();
 
 
@@ -33,10 +33,10 @@ $file = $factory->createInstanceJail($file, 'SplFileInfo');
 // Will return false
 var_dump($file instanceof SplFileInfo);
 
-// Will return the file path
+// Will return the file path because that method is declared in SplFileInfo
 $file->getFilePath();
 
-// Will throw an exception indicating a type violation
+// Will throw an exception indicating a type violation because that method is declared in SplFileObject
 $file->flock();
 
 
@@ -46,10 +46,10 @@ $file = $factory->createInstanceJail($file, 'SplFileInfo');
 // Will return false
 var_dump($file instanceof SplFileInfo);
 
-// Will return the file path
+// Will return the file path because that method is declared in SplFileInfo
 $file->getFilePath();
 
-// Will yield a method not found fatal error
+// Fatal error: method not found
 $file->flock();
 ```
 
