@@ -7,7 +7,6 @@ use InterNations\Component\TypeJail\Exception\ExceptionInterface;
 use InterNations\Component\TypeJail\Exception\HierarchyException;
 use InterNations\Component\TypeJail\Exception\InvalidArgumentException;
 use InterNations\Component\TypeJail\Factory\JailFactoryInterface;
-use InterNations\Component\TypeJail\Inflector\ClassNameInflector;
 use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass1;
 use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass2;
@@ -19,21 +18,12 @@ use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsInterface
 use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForClass;
 use InterNations\Component\Testing\AbstractTestCase;
-use ProxyManager\Configuration;
 use stdClass;
 
 abstract class AbstractJailFactoryTest extends AbstractTestCase
 {
     /** @var JailFactoryInterface */
     protected $factory;
-
-    protected function getConfiguration()
-    {
-        $configuration = new Configuration();
-        $configuration->setClassNameInflector(new ClassNameInflector('TypeJailProxy'));
-
-        return $configuration;
-    }
 
     public static function getInstanceScenarios()
     {
