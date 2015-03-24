@@ -190,6 +190,12 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
         $this->factory->createInstanceJail(new stdClass(), []);
     }
 
+    public function testCreateProxyFromAProxy()
+    {
+        $proxy = $this->factory->createInstanceJail(new BaseClass(), BaseClass::class);
+        $this->assertNotNull($proxy, $this->factory->createInstanceJail($proxy, BaseClass::class));
+    }
+
     private function assertMethodsCalls($proxy, array $allowedMethods, array $jailedMethods)
     {
         foreach ($allowedMethods as $allowedMethod) {

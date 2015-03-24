@@ -1,7 +1,10 @@
 <?php
 namespace InterNations\Component\TypeJail\Generator;
 
+use InterNations\Component\TypeJail\SuperTypeJailInterface;
 use ProxyManager\Generator\Util\ClassGeneratorUtils;
+use ProxyManager\Proxy\AccessInterceptorInterface;
+use ProxyManager\Proxy\ValueHolderInterface;
 use ProxyManager\ProxyGenerator\AccessInterceptor\MethodGenerator\SetMethodPrefixInterceptor;
 use ProxyManager\ProxyGenerator\AccessInterceptor\MethodGenerator\SetMethodSuffixInterceptor;
 use ProxyManager\ProxyGenerator\AccessInterceptor\PropertyGenerator\MethodPrefixInterceptors;
@@ -32,8 +35,9 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
 
         $publicProperties = new PublicPropertiesMap($originalClass);
         $interfaces = [
-            'ProxyManager\\Proxy\\AccessInterceptorInterface',
-            'ProxyManager\\Proxy\\ValueHolderInterface',
+            AccessInterceptorInterface::class,
+            ValueHolderInterface::class,
+            SuperTypeJailInterface::class,
         ];
         $superClass = $superClass ?: $originalClass;
 
