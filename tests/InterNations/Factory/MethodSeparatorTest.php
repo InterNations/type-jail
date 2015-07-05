@@ -5,9 +5,11 @@ use InterNations\Component\TypeJail\Factory\MethodSeparator;
 use InterNations\Component\TypeJail\Tests\Fixtures\BaseClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\ClassImplementsInterface;
 use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass;
+use InterNations\Component\TypeJail\Tests\Fixtures\ClassWithPublicDestructor;
 use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForClass;
 use InterNations\Component\Testing\AbstractTestCase;
+use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForPublicDestructorClass;
 use ReflectionClass;
 
 class MethodSeparatorTest extends AbstractTestCase
@@ -40,7 +42,12 @@ class MethodSeparatorTest extends AbstractTestCase
                 ClassImplementsInterface::class,
                 InterfaceForClass::class,
                 [['additionalMethod'], ['interfaceMethod']]
-            ]
+            ],
+            [
+                ClassWithPublicDestructor::class,
+                InterfaceForPublicDestructorClass::class,
+                [['additionalMethod'], ['__destruct', 'interfaceMethod']],
+            ],
         ];
     }
 
