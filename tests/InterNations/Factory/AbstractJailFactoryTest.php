@@ -19,6 +19,7 @@ use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsInterface
 use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForClass;
 use InterNations\Component\Testing\AbstractTestCase;
+use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForPublicDestructorClass;
 use stdClass;
 
 abstract class AbstractJailFactoryTest extends AbstractTestCase
@@ -79,7 +80,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
             ],
             [
                 new ClassWithPublicDestructor(),
-                InterfaceForClass::class,
+                InterfaceForPublicDestructorClass::class,
                 ['__destruct', 'interfaceMethod'],
                 ['additionalMethod'],
             ],
