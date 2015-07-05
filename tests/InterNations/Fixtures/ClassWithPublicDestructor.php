@@ -20,6 +20,5 @@ class ClassWithPublicDestructor implements InterfaceForPublicDestructorClass
 
     public function __destruct()
     {
-        return __FUNCTION__;
     }
 }
