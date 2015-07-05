@@ -23,7 +23,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "InterNations\\Component\\TypeJail\\Tests\\Fixtures\\": "tests/InterNations/Fixtures"
+            "InterNations\\Component\\TypeJail\\Tests\\Fixtures\\": "tests/InterNations/Fixtures",
+            "InterNations\\Component\\TypeJail\\Tests\\Factory\\": "tests/InterNations/Factory"
         }
     }
 }
