@@ -1,7 +1,12 @@
 <?php
 namespace InterNations\Component\TypeJail\Tests\Fixtures;
 
-class ClassWithPublicDestructor implements InterfaceForClass
+interface InterfaceForPublicDestructorClass
+{
+    public function interfaceMethod();
+}
+
+class ClassWithPublicDestructor implements InterfaceForPublicDestructorClass
 {
     public function interfaceMethod()
     {
@@ -15,5 +20,6 @@ class ClassWithPublicDestructor implements InterfaceForClass
 
     public function __destruct()
     {
+        return __FUNCTION__;
     }
 }
