@@ -81,7 +81,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
             [
                 new ClassWithPublicDestructor(),
                 InterfaceForPublicDestructorClass::class,
-                ['__destruct', 'interfaceMethod'],
+                ['interfaceMethod'],
                 ['additionalMethod'],
             ],
         ];
