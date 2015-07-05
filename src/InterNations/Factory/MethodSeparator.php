@@ -16,10 +16,12 @@ class MethodSeparator
         $classMethods = $superClassMethods = [];
 
         foreach ($class->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
-            if ($superClass->hasMethod($method->getName())) {
-                $superClassMethods[] = $method->getName();
+            $name = $method->getName();
+
+            if ($method->isDestructor() || $superClass->hasMethod($name)) {
+                $superClassMethods[] = $name;
             } else {
-                $classMethods[] = $method->getName();
+                $classMethods[] = $name;
             }
         }
 
