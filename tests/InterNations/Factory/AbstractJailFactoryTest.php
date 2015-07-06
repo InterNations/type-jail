@@ -12,12 +12,14 @@ use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass1;
 use InterNations\Component\TypeJail\Tests\Fixtures\AbstractBaseClass2;
 use InterNations\Component\TypeJail\Tests\Fixtures\BaseClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\ClassImplementsInterface;
+use InterNations\Component\TypeJail\Tests\Fixtures\ClassWithPublicDestructor;
 use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsInterface1;
 use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsAndImplementsInterface2;
 use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForClass;
 use InterNations\Component\Testing\AbstractTestCase;
+use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForPublicDestructorClass;
 use stdClass;
 
 abstract class AbstractJailFactoryTest extends AbstractTestCase
@@ -75,6 +77,12 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
                 ExtendsAndImplementsInterface2::class,
                 ['interfaceMethod1', 'interfaceMethod2'],
                 ['abstractMethod1', 'abstractMethod2', 'extendsMethod']
+            ],
+            [
+                new ClassWithPublicDestructor(),
+                InterfaceForPublicDestructorClass::class,
+                ['interfaceMethod'],
+                ['additionalMethod'],
             ],
         ];
     }
