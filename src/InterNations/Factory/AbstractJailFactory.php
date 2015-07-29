@@ -4,10 +4,10 @@ namespace InterNations\Component\TypeJail\Factory;
 use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Exception\HierarchyException;
 use InterNations\Component\TypeJail\Exception\InvalidArgumentException;
-use InterNations\Component\TypeJail\SuperTypeJailInterface;
 use InterNations\Component\TypeJail\Util\TypeUtil;
 use ProxyManager\Configuration;
 use ProxyManager\Generator\ClassGenerator;
+use ProxyManager\Proxy\ProxyInterface;
 use ProxyManager\ProxyGenerator\AccessInterceptorValueHolderGenerator;
 use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
 use ProxyManager\Version;
@@ -43,7 +43,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
             throw InvalidArgumentException::invalidType($class, 'string');
         }
 
-        if ($instance instanceof SuperTypeJailInterface) {
+        if ($instance instanceof ProxyInterface) {
             return $instance;
         }
 

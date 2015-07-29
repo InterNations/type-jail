@@ -20,6 +20,7 @@ use InterNations\Component\TypeJail\Tests\Fixtures\ExtendsClass;
 use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForClass;
 use InterNations\Component\Testing\AbstractTestCase;
 use InterNations\Component\TypeJail\Tests\Fixtures\InterfaceForPublicDestructorClass;
+use ProxyManager\Proxy\ProxyInterface;
 use stdClass;
 
 abstract class AbstractJailFactoryTest extends AbstractTestCase
@@ -198,10 +199,16 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
         $this->factory->createInstanceJail(new stdClass(), []);
     }
 
-    public function testCreateProxyFromAProxy()
+    public function testCreateProxyFromAJail()
     {
         $proxy = $this->factory->createInstanceJail(new BaseClass(), BaseClass::class);
-        $this->assertNotNull($proxy, $this->factory->createInstanceJail($proxy, BaseClass::class));
+        $this->assertSame($proxy, $this->factory->createInstanceJail($proxy, BaseClass::class));
+    }
+
+    public function testCreateProxyFromAProxy()
+    {
+        $proxy = $this->getSimpleMock(ProxyInterface::class);
+        $this->assertSame($proxy, $this->factory->createInstanceJail($proxy, ProxyInterface::class));
     }
 
     private function assertMethodsCalls($proxy, array $allowedMethods, array $jailedMethods)
