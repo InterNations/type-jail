@@ -61,6 +61,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         };
 
         $proxyClassName = $this->generateProxyForSuperClass($instanceClass, $superClass);
+
         return new $proxyClassName(
             $instance,
             count($prohibitedMethods) > 0

@@ -5,9 +5,9 @@
         "ocramius/proxy-manager": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4",
+        "phpunit/phpunit": "~4|~5",
         "internations/testing-component": "*",
-        "internations/kodierungsregelwerksammlung": "*"
+        "internations/kodierungsregelwerksammlung": "dev-master"
     },
     "license": "MIT",
     "authors": [

@@ -17,7 +17,7 @@ final class TypeUtil
     {
         return $class->getName() === $superClass->getName()
             || $class->isSubclassOf($superClass)
-            || in_array($superClass, $class->getInterfaces());
+            || in_array($superClass, $class->getInterfaces(), true);
     }
 
     /**
@@ -31,8 +31,10 @@ final class TypeUtil
         $interfaceNames = $class->getInterfaceNames();
 
         $superTypeNames = [];
+
         do {
             $superTypeNames[] = $class->getName();
+
         } while ($class = $class->getParentClass());
 
         return array_merge($superTypeNames, $interfaceNames);
