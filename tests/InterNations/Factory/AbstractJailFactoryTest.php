@@ -207,7 +207,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
 
     public function testCreateProxyFromAProxy()
     {
-        $proxy = $this->getSimpleMock(ProxyInterface::class);
+        $proxy = $this->createMock(ProxyInterface::class);
         $this->assertSame($proxy, $this->factory->createInstanceJail($proxy, ProxyInterface::class));
     }
 
