@@ -151,8 +151,8 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
      */
     public function testInvalidInheritanceHierarchy($instance, $class)
     {
-        $this->setExpectedException(
-            HierarchyException::class,
+        $this->expectException(HierarchyException::class);
+        $this->expectExceptionMessage(
             sprintf(
                 'Cannot create proxy for "%1$s" as "%2$s" is not part of the inheritance hierarchy of "%1$s". ',
                 get_class($instance),
@@ -165,37 +165,29 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
 
     public function testInvalidTypeForAggregate()
     {
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            'Expected type to be one of "array", "Traversable", got "stdClass"'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected type to be one of "array", "Traversable", got "stdClass"');
         $this->factory->createAggregateJail(new stdClass(), stdClass::class);
     }
 
     public function testInvalidTypeForAggregateClass()
     {
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            'Expected type to be "string", got "array"'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected type to be "string", got "array"');
         $this->factory->createAggregateJail([], []);
     }
 
     public function testInvalidTypeForSingleInstance()
     {
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            'Expected type to be "object", got "array"'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected type to be "object", got "array"');
         $this->factory->createInstanceJail([], stdClass::class);
     }
 
     public function testInvalidTypeForSingleInstanceClass()
     {
-        $this->setExpectedException(
-            InvalidArgumentException::class,
-            'Expected type to be "string", got "array"'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Expected type to be "string", got "array"');
         $this->factory->createInstanceJail(new stdClass(), []);
     }
 

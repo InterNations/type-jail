@@ -11,11 +11,13 @@ use ProxyManager\ProxyGenerator\AccessInterceptor\PropertyGenerator\MethodPrefix
 use ProxyManager\ProxyGenerator\AccessInterceptor\PropertyGenerator\MethodSuffixInterceptors;
 use ProxyManager\ProxyGenerator\AccessInterceptorValueHolder\MethodGenerator\InterceptedMethod;
 use ProxyManager\ProxyGenerator\Assertion\CanProxyAssertion;
-use ProxyManager\ProxyGenerator\AccessInterceptorValueHolder\MethodGenerator\Constructor;
 use ProxyManager\ProxyGenerator\LazyLoadingValueHolder\PropertyGenerator\ValueHolderProperty;
+use ProxyManager\ProxyGenerator\AccessInterceptorValueHolder\MethodGenerator\StaticProxyConstructor;
 use ProxyManager\ProxyGenerator\PropertyGenerator\PublicPropertiesMap;
 use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
+use ProxyManager\ProxyGenerator\Util\Properties;
 use ProxyManager\ProxyGenerator\Util\ProxiedMethodsFilter;
+use ProxyManager\ProxyGenerator\ValueHolder\MethodGenerator\Constructor;
 use ProxyManager\ProxyGenerator\ValueHolder\MethodGenerator\GetWrappedValueHolderValue;
 use ReflectionClass;
 use ReflectionMethod;
@@ -33,7 +35,7 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
     {
         CanProxyAssertion::assertClassCanBeProxied($originalClass);
 
-        $publicProperties = new PublicPropertiesMap($originalClass);
+        $publicProperties = new PublicPropertiesMap(Properties::fromReflectionClass($originalClass));
         $interfaces = [
             AccessInterceptorInterface::class,
             ValueHolderInterface::class,
@@ -74,7 +76,8 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
                     ProxiedMethodsFilter::getProxiedMethods($originalClass)
                 ),
                 [
-                    new Constructor($originalClass, $valueHolder, $prefixInterceptors, $suffixInterceptors),
+                    new StaticProxyConstructor($superClass, $valueHolder, $prefixInterceptors, $suffixInterceptors),
+                    Constructor::generateMethod($originalClass, $valueHolder),
                     new GetWrappedValueHolderValue($valueHolder),
                     new SetMethodPrefixInterceptor($prefixInterceptors),
                     new SetMethodSuffixInterceptor($suffixInterceptors),

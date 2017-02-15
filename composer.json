@@ -3,11 +3,11 @@
     "description": "Enforce type constraints",
     "require": {
         "php": ">=5.6",
-        "ocramius/proxy-manager": "~1.0"
+        "ocramius/proxy-manager": "~2"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=5.4",
-        "internations/testing-component": "*",
+        "phpunit/phpunit": "~6",
+        "internations/testing-component": "~1",
         "internations/kodierungsregelwerksammlung": "dev-master"
     },
     "license": "MIT",

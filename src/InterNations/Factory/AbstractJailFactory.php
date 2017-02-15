@@ -62,7 +62,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
 
         $proxyClassName = $this->generateProxyForSuperClass($instanceClass, $superClass);
 
-        return new $proxyClassName(
+        return $proxyClassName::staticProxyConstructor(
             $instance,
             count($prohibitedMethods) > 0
                 ? array_combine($prohibitedMethods, array_fill(0, count($prohibitedMethods), $deny))
@@ -89,6 +89,23 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         return $proxyAggregate;
     }
 
+    /**
+     * @param ReflectionClass $class
+     * @param ReflectionClass $superClass
+     * @return ReflectionClass
+     */
+    abstract protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass);
+
+    /**
+     * @param ReflectionClass $class
+     * @param ReflectionClass $superClass
+     * @return string
+     */
+    abstract protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass);
+
+    /** @return ProxyGeneratorInterface */
+    abstract protected function getGenerator();
+
     private function generateProxyForSuperClass(ReflectionClass $class, ReflectionClass $superClass)
     {
         $cacheKey = $this->getSurrogateClassName($class, $superClass);
@@ -100,7 +117,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         $proxyParameters = [
             'cacheKey'           => $cacheKey,
             'factory'             => get_class($this),
-            'proxyManagerVersion' => Version::VERSION
+            'proxyManagerVersion' => Version::getVersion(),
         ];
         $proxyClassName = $this
             ->configuration
@@ -119,23 +136,6 @@ abstract class AbstractJailFactory implements JailFactoryInterface
 
         return $this->checkedClasses[$cacheKey] = $proxyClassName;
     }
-
-    /**
-     * @param ReflectionClass $class
-     * @param ReflectionClass $superClass
-     * @return ReflectionClass
-     */
-    abstract protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass);
-
-    /**
-     * @param ReflectionClass $class
-     * @param ReflectionClass $superClass
-     * @return string
-     */
-    abstract protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass);
-
-    /** @return ProxyGeneratorInterface */
-    abstract protected function getGenerator();
 
     private function generateProxyClass(
         $proxyClassName,
