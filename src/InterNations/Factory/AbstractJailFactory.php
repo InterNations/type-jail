@@ -27,20 +27,19 @@ abstract class AbstractJailFactory implements JailFactoryInterface
     /** @var Configuration */
     protected $configuration;
 
-    /** @param Configuration $configuration */
-    public function __construct(Configuration $configuration = null)
+    public function __construct(?Configuration $configuration = null)
     {
         $this->configuration = $configuration ?: new Configuration();
     }
 
-    public function createInstanceJail($instance, $class)
+    /**
+     * @param object $instance
+     * @return object
+     */
+    public function createInstanceJail($instance, string $class)
     {
         if (!is_object($instance)) {
             throw InvalidArgumentException::invalidType($instance, 'object');
-        }
-
-        if (!is_string($class)) {
-            throw InvalidArgumentException::invalidType($class, 'string');
         }
 
         if ($instance instanceof ProxyInterface) {
@@ -54,7 +53,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
             throw HierarchyException::hierarchyMismatch($instanceClass, $superClass);
         }
 
-        list($prohibitedMethods) = $this->getMethodSeparator()->separateMethods($instanceClass, $superClass);
+        [$prohibitedMethods] = $this->getMethodSeparator()->separateMethods($instanceClass, $superClass);
 
         $deny = static function ($proxy, $instance, $method, $params, &$returnEarly) use ($class) {
             throw JailException::jailedMethod($method, get_class($instance), $class);
@@ -70,16 +69,12 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         );
     }
 
-    public function createAggregateJail($instanceAggregate, $class)
+    /**
+     * @param object[] $instanceAggregate
+     * @return object[]
+     */
+    public function createAggregateJail(iterable $instanceAggregate, string $class): array
     {
-        if (!TypeUtil::isTraversable($instanceAggregate)) {
-            throw InvalidArgumentException::invalidType($instanceAggregate, ['array', 'Traversable']);
-        }
-
-        if (!is_string($class)) {
-            throw InvalidArgumentException::invalidType($class, 'string');
-        }
-
         $proxyAggregate = [];
 
         foreach ($instanceAggregate as $instance) {
@@ -89,24 +84,13 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         return $proxyAggregate;
     }
 
-    /**
-     * @param ReflectionClass $class
-     * @param ReflectionClass $superClass
-     * @return ReflectionClass
-     */
-    abstract protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass);
+    abstract protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass): ReflectionClass;
 
-    /**
-     * @param ReflectionClass $class
-     * @param ReflectionClass $superClass
-     * @return string
-     */
-    abstract protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass);
+    abstract protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass): string;
 
-    /** @return ProxyGeneratorInterface */
-    abstract protected function getGenerator();
+    abstract protected function getGenerator(): ProxyGeneratorInterface;
 
-    private function generateProxyForSuperClass(ReflectionClass $class, ReflectionClass $superClass)
+    private function generateProxyForSuperClass(ReflectionClass $class, ReflectionClass $superClass): string
     {
         $cacheKey = $this->getSurrogateClassName($class, $superClass);
 
@@ -137,12 +121,13 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         return $this->checkedClasses[$cacheKey] = $proxyClassName;
     }
 
+    /** @param mixed[] $proxyParameters */
     private function generateProxyClass(
-        $proxyClassName,
+        string $proxyClassName,
         ReflectionClass $baseClass,
         ReflectionClass $superClass,
         array $proxyParameters
-    )
+    ): void
     {
         $className = $this->configuration->getClassNameInflector()->getUserClassName($baseClass->getName());
         $phpClass = new ClassGenerator($proxyClassName);
@@ -155,8 +140,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         $this->configuration->getProxyAutoloader()->__invoke($proxyClassName);
     }
 
-    /** @return MethodSeparator */
-    protected function getMethodSeparator()
+    protected function getMethodSeparator(): MethodSeparator
     {
         return $this->methodSeparator ?: $this->methodSeparator = new MethodSeparator();
     }

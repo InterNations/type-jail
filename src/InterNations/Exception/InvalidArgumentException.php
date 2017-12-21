@@ -8,9 +8,8 @@ class InvalidArgumentException extends BaseInvalidArgumentException implements E
     /**
      * @param mixed $given
      * @param string|array $expected
-     * @return InvalidArgumentException
      */
-    public static function invalidType($given, $expected)
+    public static function invalidType($given, $expected): self
     {
         return new static(
             sprintf(

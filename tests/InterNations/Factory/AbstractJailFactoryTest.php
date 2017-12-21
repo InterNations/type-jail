@@ -163,34 +163,6 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
         $this->factory->createInstanceJail($instance, $class);
     }
 
-    public function testInvalidTypeForAggregate()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected type to be one of "array", "Traversable", got "stdClass"');
-        $this->factory->createAggregateJail(new stdClass(), stdClass::class);
-    }
-
-    public function testInvalidTypeForAggregateClass()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected type to be "string", got "array"');
-        $this->factory->createAggregateJail([], []);
-    }
-
-    public function testInvalidTypeForSingleInstance()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected type to be "object", got "array"');
-        $this->factory->createInstanceJail([], stdClass::class);
-    }
-
-    public function testInvalidTypeForSingleInstanceClass()
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('Expected type to be "string", got "array"');
-        $this->factory->createInstanceJail(new stdClass(), []);
-    }
-
     public function testCreateProxyFromAJail()
     {
         $proxy = $this->factory->createInstanceJail(new BaseClass(), BaseClass::class);

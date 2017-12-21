@@ -6,7 +6,7 @@ use ReflectionClass;
 
 class HierarchyException extends RuntimeException
 {
-    public static function hierarchyMismatch(ReflectionClass $class, ReflectionClass $superClass)
+    public static function hierarchyMismatch(ReflectionClass $class, ReflectionClass $superClass): self
     {
         return new static(
             sprintf(

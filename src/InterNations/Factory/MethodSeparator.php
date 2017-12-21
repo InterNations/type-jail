@@ -7,11 +7,13 @@ use ReflectionMethod;
 class MethodSeparator
 {
     /**
-     * @param ReflectionClass $class
-     * @param ReflectionClass $superClass
-     * @return array Pair. The first element contains a list of class methods, the second the super class methods
+     * Separate methods between class and superclass
+     *
+     *  Returns a pair. The first element contains a list of class methods, the second the super class methods
+     *
+     * @return array[]
      */
-    public function separateMethods(ReflectionClass $class, ReflectionClass $superClass)
+    public function separateMethods(ReflectionClass $class, ReflectionClass $superClass): array
     {
         $classMethods = $superClassMethods = [];
 

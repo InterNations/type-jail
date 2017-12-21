@@ -5,13 +5,7 @@ use ReflectionClass;
 
 class JailException extends RuntimeException
 {
-    /**
-     * @param string $methodName
-     * @param string $class
-     * @param string $proxyClass
-     * @return JailException
-     */
-    public static function jailedMethod($methodName, $class, $proxyClass)
+    public static function jailedMethod(string $methodName, string $class, string $proxyClass): self
     {
         return new static(
             sprintf(

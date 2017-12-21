@@ -2,18 +2,13 @@
 namespace InterNations\Component\TypeJail\Util;
 
 use ReflectionClass;
-use Traversable;
 
 final class TypeUtil
 {
     /**
      * Returns true if the given type is a super type
-     *
-     * @param ReflectionClass $class
-     * @param ReflectionClass $superClass
-     * @return boolean
      */
-    public static function isSuperTypeOf(ReflectionClass $class, ReflectionClass $superClass)
+    public static function isSuperTypeOf(ReflectionClass $class, ReflectionClass $superClass): bool
     {
         return $class->getName() === $superClass->getName()
             || $class->isSubclassOf($superClass)
@@ -23,10 +18,9 @@ final class TypeUtil
     /**
      * Return a list of super type names (interfaces and classes)
      *
-     * @param ReflectionClass $class
-     * @return array
+     * @return string[]
      */
-    public static function getSuperTypeNames(ReflectionClass $class)
+    public static function getSuperTypeNames(ReflectionClass $class): array
     {
         $interfaceNames = $class->getInterfaceNames();
 
@@ -38,16 +32,5 @@ final class TypeUtil
         } while ($class = $class->getParentClass());
 
         return array_merge($superTypeNames, $interfaceNames);
-    }
-
-    /**
-     * Returns true if a value is traversable
-     *
-     * @param mixed $value
-     * @return boolean
-     */
-    public static function isTraversable($value)
-    {
-        return is_array($value) || $value instanceof Traversable;
     }
 }

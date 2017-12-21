@@ -30,8 +30,8 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
     public function generate(
         ReflectionClass $originalClass,
         ClassGenerator $classGenerator,
-        ReflectionClass $superClass = null
-    )
+        ?ReflectionClass $superClass = null
+    ): void
     {
         CanProxyAssertion::assertClassCanBeProxied($originalClass);
 
