@@ -2,7 +2,7 @@
     "name": "internations/type-jail",
     "description": "Enforce type constraints",
     "require": {
-        "php": "~7",
+        "php": "~7.1",
         "ocramius/proxy-manager": "~2"
     },
     "require-dev": {
