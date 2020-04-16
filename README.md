@@ -1,6 +1,4 @@
-# Type Jail
-
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/InterNations/type-jail?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/InterNations/type-jail.svg?branch=master)](https://travis-ci.org/InterNations/type-jail) [![Dependency Status](https://www.versioneye.com/user/projects/54b62fa1050646e16d0000cb/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54b62fa1050646e16d0000cb) [![Average time to resolve an issue](https://isitmaintained.com/badge/resolution/InterNations/type-jail.svg)](https://isitmaintained.com/project/InterNations/type-jail "Average time to resolve an issue") [![Percentage of issues still open](https://isitmaintained.com/badge/open/InterNations/type-jail.svg)](https://isitmaintained.com/project/InterNations/type-jail "Percentage of issues still open")
+# Type Jail [![Build Status](https://travis-ci.org/InterNations/type-jail.svg?branch=master)](https://travis-ci.org/InterNations/type-jail)
 
 Enforce super type contract of an object
 

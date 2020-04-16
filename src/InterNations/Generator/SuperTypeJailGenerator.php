@@ -56,7 +56,7 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
         $classGenerator->addPropertyFromGenerator($publicProperties);
 
         array_map(
-            static function (MethodGenerator $generatedMethod) use ($originalClass, $classGenerator) {
+            static function (MethodGenerator $generatedMethod) use ($originalClass, $classGenerator): void {
                 ClassGeneratorUtils::addMethodIfNotFinal($originalClass, $classGenerator, $generatedMethod);
             },
             array_merge(
@@ -65,7 +65,7 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
                         $prefixInterceptors,
                         $suffixInterceptors,
                         $valueHolder
-                    ) {
+                    ): string {
                         return InterceptedMethod::generateMethod(
                             new MethodReflection($method->getDeclaringClass()->getName(), $method->getName()),
                             $valueHolder,

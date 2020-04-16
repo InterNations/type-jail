@@ -55,7 +55,17 @@ abstract class AbstractJailFactory implements JailFactoryInterface
 
         [$prohibitedMethods] = $this->getMethodSeparator()->separateMethods($instanceClass, $superClass);
 
-        $deny = static function ($proxy, $instance, $method, $params, &$returnEarly) use ($class) {
+        /**
+         * @param object $instance
+         * @param mixed[] $params
+         */
+        $deny = static function (
+            ProxyInterface $proxy,
+            $instance,
+            string $method,
+            array $params,
+            bool &$returnEarly // @codingStandardsIgnoreLine
+        ) use ($class): void {
             throw JailException::jailedMethod($method, get_class($instance), $class);
         };
 
