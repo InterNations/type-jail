@@ -2,6 +2,7 @@
 namespace InterNations\Component\TypeJail\Generator;
 
 use InterNations\Component\TypeJail\SuperTypeJailInterface;
+use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use ProxyManager\Generator\Util\ClassGeneratorUtils;
 use ProxyManager\Proxy\AccessInterceptorInterface;
 use ProxyManager\Proxy\ValueHolderInterface;
@@ -65,7 +66,7 @@ class SuperTypeJailGenerator implements ProxyGeneratorInterface
                         $prefixInterceptors,
                         $suffixInterceptors,
                         $valueHolder
-                    ): string {
+                    ): MethodGenerator {
                         return InterceptedMethod::generateMethod(
                             new MethodReflection($method->getDeclaringClass()->getName(), $method->getName()),
                             $valueHolder,
