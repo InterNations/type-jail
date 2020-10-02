@@ -14,15 +14,14 @@ use ReflectionClass;
 
 class MethodSeparatorTest extends AbstractTestCase
 {
-    /** @var MethodSeparator */
-    private $separator;
+    private MethodSeparator $separator;
 
     protected function setUp(): void
     {
         $this->separator = new MethodSeparator();
     }
 
-    public static function getImplementations()
+    public static function getImplementations(): iterable
     {
         return [
             [
@@ -52,13 +51,11 @@ class MethodSeparatorTest extends AbstractTestCase
     }
 
     /**
-     * @param string $childClass
-     * @param string $parentClass
-     * @param array $expectation
+     * @param array $expectatios
      * @dataProvider getImplementations
      */
-    public function testMethodSeparation($childClass, $parentClass, array $expectation)
+    public function testMethodSeparation(string $childClass, string $parentClass, array $expectations): void
     {
-        $this->assertEquals($expectation, $this->separator->separateMethods(new ReflectionClass($childClass), new ReflectionClass($parentClass)));
+        self::assertEquals($expectations, $this->separator->separateMethods(new ReflectionClass($childClass), new ReflectionClass($parentClass)));
     }
 }

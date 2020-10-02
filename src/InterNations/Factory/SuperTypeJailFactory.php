@@ -5,7 +5,7 @@ use InterNations\Component\TypeJail\Generator\SuperTypeJailGenerator;
 use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
 use ReflectionClass;
 
-class SuperTypeJailFactory extends AbstractJailFactory
+final class SuperTypeJailFactory extends AbstractJailFactory
 {
     protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass): ReflectionClass
     {
@@ -17,8 +17,8 @@ class SuperTypeJailFactory extends AbstractJailFactory
         return 'JailedSuperType' . hash('sha256', $class->getName() . '\\__SURROGATE__\\' . $superClass->getName());
     }
 
-    protected function getGenerator(): ProxyGeneratorInterface
+    protected function createGenerator(): ProxyGeneratorInterface
     {
-        return $this->generator ?: $this->generator = new SuperTypeJailGenerator();
+        return new SuperTypeJailGenerator();
     }
 }

@@ -12,5 +12,5 @@ before_script:
   - composer install
 
 script:
-  - ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml --exclude=InterNations.Naming.NamespaceName,Generic.PHP.RequireStrictTypes ./src/
+  - ./vendor/bin/phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml --exclude=InterNations.Naming.NamespaceName,Generic.PHP.RequireStrictTypes,InterNations.Naming.Final ./src/
   - vendor/bin/phpunit

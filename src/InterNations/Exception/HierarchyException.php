@@ -8,7 +8,7 @@ class HierarchyException extends RuntimeException
 {
     public static function hierarchyMismatch(ReflectionClass $class, ReflectionClass $superClass): self
     {
-        return new static(
+        return new self(
             sprintf(
                 'Cannot create proxy for "%1$s" as "%2$s" is not part of the inheritance hierarchy of "%1$s". '
                 . 'Valid supertypes are: "%3$s"',

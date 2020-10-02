@@ -25,8 +25,7 @@ use stdClass;
 
 abstract class AbstractJailFactoryTest extends AbstractTestCase
 {
-    /** @var JailFactoryInterface */
-    protected $factory;
+    protected JailFactoryInterface $factory;
 
     public static function getInstanceScenarios(): array
     {
@@ -89,17 +88,15 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @param object $instance
-     * @param string $class
-     * @param array $allowedMethods
-     * @param array $jailedMethods
+     * @param string[] $allowedMethods
+     * @param string[] $jailedMethods
      * @dataProvider getInstanceScenarios
      */
-    public function testJailScenarios($instance, $class, array $allowedMethods, array $jailedMethods): void
+    public function testJailScenarios(object $instance, string $class, array $allowedMethods, array $jailedMethods): void
     {
         $proxy = $this->factory->createInstanceJail($instance, $class);
-        $this->assertIsObject($proxy);
-        $this->assertProxyInstanceOf($proxy, get_class($instance), $class);
+        self::assertIsObject($proxy);
+        static::assertProxyInstanceOf($proxy, get_class($instance), $class);
 
         $this->assertMethodsCalls($proxy, $allowedMethods, $jailedMethods);
     }
@@ -123,12 +120,11 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
 
     /**
      * @param object[] $list
-     * @param string $class
-     * @param array $allowedMethods
-     * @param array $jailedMethods
+     * @param string[] $allowedMethods
+     * @param string[] $jailedMethods
      * @dataProvider getAggregateScenarios
      */
-    public function testJailAggregate($list, $class, array $allowedMethods, array $jailedMethods): void
+    public function testJailAggregate(iterable $list, string $class, array $allowedMethods, array $jailedMethods): void
     {
         $proxies = $this->factory->createAggregateJail($list, $class);
         foreach ($proxies as $proxy) {
@@ -145,11 +141,9 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
     }
 
     /**
-     * @param object $instance
-     * @param string $class
      * @dataProvider getHierarchyScenarios
      */
-    public function testInvalidInheritanceHierarchy($instance, $class): void
+    public function testInvalidInheritanceHierarchy(object $instance, string $class): void
     {
         $this->expectException(HierarchyException::class);
         $this->expectExceptionMessage(
@@ -166,42 +160,42 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
     public function testCreateProxyFromAJail(): void
     {
         $proxy = $this->factory->createInstanceJail(new BaseClass(), BaseClass::class);
-        $this->assertSame($proxy, $this->factory->createInstanceJail($proxy, BaseClass::class));
+        self::assertSame($proxy, $this->factory->createInstanceJail($proxy, BaseClass::class));
     }
 
     public function testCreateProxyFromAProxy(): void
     {
         $proxy = $this->createMock(ProxyInterface::class);
-        $this->assertSame($proxy, $this->factory->createInstanceJail($proxy, ProxyInterface::class));
+        self::assertSame($proxy, $this->factory->createInstanceJail($proxy, ProxyInterface::class));
     }
 
-    private function assertMethodsCalls($proxy, array $allowedMethods, array $jailedMethods): void
+    private function assertMethodsCalls(ProxyInterface $proxy, array $allowedMethods, array $jailedMethods): void
     {
         foreach ($allowedMethods as $allowedMethod) {
-            $this->assertSame($allowedMethod, $proxy->{$allowedMethod}());
+            self::assertSame($allowedMethod, $proxy->{$allowedMethod}());
         }
 
         foreach ($jailedMethods as $jailedMethod) {
-            $this->assertJailedMethod($proxy, $jailedMethod);
+            static::assertJailedMethod($proxy, $jailedMethod);
         }
     }
 
-    protected function assertProxyInstanceOf($proxy, $baseClass, $superClass)
+    protected static function assertProxyInstanceOf(ProxyInterface $proxy, string $baseClass, string $superClass): void
     {
-        $this->assertInstanceOf($superClass, $proxy);
+        self::assertInstanceOf($superClass, $proxy);
 
         if ($baseClass !== $superClass) {
-            $this->assertNotInstanceOf($baseClass, $proxy);
+            self::assertNotInstanceOf($baseClass, $proxy);
         }
     }
 
-    protected function assertJailedMethod($proxy, $method)
+    protected static function assertJailedMethod(ProxyInterface $proxy, string $method): void
     {
         try {
             $proxy->{$method}();
-            $this->fail('Expected exception');
+            self::fail('Expected exception');
         } catch (JailException $e) {
-            $this->assertInstanceOf(ExceptionInterface::class, $e);
+            self::assertInstanceOf(ExceptionInterface::class, $e);
         }
     }
 }

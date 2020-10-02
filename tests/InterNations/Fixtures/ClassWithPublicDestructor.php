@@ -8,12 +8,12 @@ interface InterfaceForPublicDestructorClass
 
 class ClassWithPublicDestructor implements InterfaceForPublicDestructorClass
 {
-    public function interfaceMethod()
+    public function interfaceMethod(): string
     {
         return __FUNCTION__;
     }
 
-    public function additionalMethod()
+    public function additionalMethod(): string
     {
         return __FUNCTION__;
     }

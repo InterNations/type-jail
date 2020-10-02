@@ -2,6 +2,7 @@
 namespace InterNations\Component\TypeJail\Tests\Factory;
 
 use InterNations\Component\TypeJail\Factory\SuperTypeFactory;
+use ProxyManager\Proxy\ProxyInterface;
 
 class SuperTypeFactoryTest extends AbstractJailFactoryTest
 {
@@ -10,8 +11,8 @@ class SuperTypeFactoryTest extends AbstractJailFactoryTest
         $this->factory = new SuperTypeFactory();
     }
 
-    protected function assertJailedMethod($proxy, $method)
+    protected static function assertJailedMethod(ProxyInterface $proxy, string $method): void
     {
-        $this->assertFalse(method_exists($proxy, $method), 'Method "' . $method . '" should not exist');
+        self::assertFalse(method_exists($proxy, $method), 'Method "' . $method . '" should not exist');
     }
 }

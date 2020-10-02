@@ -2,6 +2,7 @@
 namespace InterNations\Component\TypeJail\Tests\Factory;
 
 use InterNations\Component\TypeJail\Factory\JailFactory;
+use ProxyManager\Proxy\ProxyInterface;
 
 class JailFactoryTest extends AbstractJailFactoryTest
 {
@@ -10,9 +11,9 @@ class JailFactoryTest extends AbstractJailFactoryTest
         $this->factory = new JailFactory();
     }
 
-    protected function assertProxyInstanceOf($proxy, $baseClass, $superClass)
+    protected static function assertProxyInstanceOf(ProxyInterface $proxy, string $baseClass, string $superClass): void
     {
-        $this->assertInstanceOf($superClass, $proxy);
-        $this->assertInstanceOf($baseClass, $proxy);
+        self::assertInstanceOf($superClass, $proxy);
+        self::assertInstanceOf($baseClass, $proxy);
     }
 }
