@@ -21,9 +21,9 @@ use ProxyManager\ProxyGenerator\ValueHolder\MethodGenerator\Constructor;
 use ProxyManager\ProxyGenerator\ValueHolder\MethodGenerator\GetWrappedValueHolderValue;
 use ReflectionClass;
 use ReflectionMethod;
-use Zend\Code\Generator\ClassGenerator;
-use Zend\Code\Generator\MethodGenerator;
-use Zend\Code\Reflection\MethodReflection;
+use Laminas\Code\Generator\ClassGenerator;
+use Laminas\Code\Generator\MethodGenerator;
+use Laminas\Code\Reflection\MethodReflection;
 
 class SuperTypeJailGenerator implements ProxyGeneratorInterface
 {

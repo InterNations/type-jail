@@ -3,45 +3,29 @@ namespace InterNations\Component\TypeJail\Factory;
 
 use InterNations\Component\TypeJail\Exception\JailException;
 use InterNations\Component\TypeJail\Exception\HierarchyException;
-use InterNations\Component\TypeJail\Exception\InvalidArgumentException;
 use InterNations\Component\TypeJail\Util\TypeUtil;
 use ProxyManager\Configuration;
 use ProxyManager\Generator\ClassGenerator;
 use ProxyManager\Proxy\ProxyInterface;
-use ProxyManager\ProxyGenerator\AccessInterceptorValueHolderGenerator;
 use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
 use ProxyManager\Version;
 use ReflectionClass;
 
 abstract class AbstractJailFactory implements JailFactoryInterface
 {
-    /** @var array */
-    private $checkedClasses = [];
-
-    /** @var AccessInterceptorValueHolderGenerator */
-    protected $generator;
-
-    /** @var MethodSeparator */
-    protected $methodSeparator;
-
-    /** @var Configuration */
-    protected $configuration;
+    protected Configuration $configuration;
+    /** @var string[] */
+    private array $checkedClasses = [];
+    private ?ProxyGeneratorInterface $generator = null;
+    private ?MethodSeparatorInterface $methodSeparator = null;
 
     public function __construct(?Configuration $configuration = null)
     {
         $this->configuration = $configuration ?: new Configuration();
     }
 
-    /**
-     * @param object $instance
-     * @return object
-     */
-    public function createInstanceJail($instance, string $class)
+    final public function createInstanceJail(object $instance, string $class): object
     {
-        if (!is_object($instance)) {
-            throw InvalidArgumentException::invalidType($instance, 'object');
-        }
-
         if ($instance instanceof ProxyInterface) {
             return $instance;
         }
@@ -61,7 +45,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
          */
         $deny = static function (
             ProxyInterface $proxy,
-            $instance,
+            object $instance,
             string $method,
             array $params,
             bool &$returnEarly // @codingStandardsIgnoreLine
@@ -83,22 +67,23 @@ abstract class AbstractJailFactory implements JailFactoryInterface
      * @param object[] $instanceAggregate
      * @return object[]
      */
-    public function createAggregateJail(iterable $instanceAggregate, string $class): array
+    final public function createAggregateJail(iterable $instanceAggregate, string $class): iterable // @codingStandardsIgnoreLine
     {
-        $proxyAggregate = [];
-
         foreach ($instanceAggregate as $instance) {
-            $proxyAggregate[] = $this->createInstanceJail($instance, $class);
+            yield $this->createInstanceJail($instance, $class);
         }
-
-        return $proxyAggregate;
     }
 
     abstract protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass): ReflectionClass;
 
     abstract protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass): string;
 
-    abstract protected function getGenerator(): ProxyGeneratorInterface;
+    abstract protected function createGenerator(): ProxyGeneratorInterface;
+
+    protected function getGenerator(): ProxyGeneratorInterface
+    {
+        return $this->generator = $this->generator ?? $this->createGenerator();
+    }
 
     private function generateProxyForSuperClass(ReflectionClass $class, ReflectionClass $superClass): string
     {
@@ -150,8 +135,13 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         $this->configuration->getProxyAutoloader()->__invoke($proxyClassName);
     }
 
-    protected function getMethodSeparator(): MethodSeparator
+    private function getMethodSeparator(): MethodSeparatorInterface
     {
-        return $this->methodSeparator ?: $this->methodSeparator = new MethodSeparator();
+        return $this->methodSeparator ?: $this->methodSeparator = $this->createMethodSeparator();
+    }
+
+    protected function createMethodSeparator(): MethodSeparatorInterface
+    {
+        return new MethodSeparator();
     }
 }

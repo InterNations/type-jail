@@ -1,6 +1,8 @@
 <?php
 namespace InterNations\Component\TypeJail\Exception;
 
-interface ExceptionInterface
+use Throwable;
+
+interface ExceptionInterface extends Throwable
 {
 }

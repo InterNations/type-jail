@@ -5,7 +5,7 @@ use ProxyManager\ProxyGenerator\AccessInterceptorValueHolderGenerator;
 use ProxyManager\ProxyGenerator\ProxyGeneratorInterface;
 use ReflectionClass;
 
-class SuperTypeFactory extends AbstractJailFactory
+final class SuperTypeFactory extends AbstractJailFactory
 {
     protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass): ReflectionClass
     {
@@ -17,8 +17,8 @@ class SuperTypeFactory extends AbstractJailFactory
         return $superClass->getName();
     }
 
-    protected function getGenerator(): ProxyGeneratorInterface
+    protected function createGenerator(): ProxyGeneratorInterface
     {
-        return $this->generator ?: $this->generator = new AccessInterceptorValueHolderGenerator();
+        return new AccessInterceptorValueHolderGenerator();
     }
 }

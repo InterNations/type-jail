@@ -8,12 +8,12 @@ interface InterfaceForClass
 
 class ClassImplementsInterface implements InterfaceForClass
 {
-    public function interfaceMethod()
+    public function interfaceMethod(): string
     {
         return __FUNCTION__;
     }
 
-    public function additionalMethod()
+    public function additionalMethod(): string
     {
         return __FUNCTION__;
     }

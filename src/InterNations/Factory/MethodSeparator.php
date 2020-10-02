@@ -4,14 +4,14 @@ namespace InterNations\Component\TypeJail\Factory;
 use ReflectionClass;
 use ReflectionMethod;
 
-class MethodSeparator
+final class MethodSeparator implements MethodSeparatorInterface
 {
     /**
      * Separate methods between class and superclass
      *
-     *  Returns a pair. The first element contains a list of class methods, the second the super class methods
+     * Returns a pair. The first element contains a list of class methods, the second the super class methods
      *
-     * @return array[]
+     * @return string[]
      */
     public function separateMethods(ReflectionClass $class, ReflectionClass $superClass): array
     {
