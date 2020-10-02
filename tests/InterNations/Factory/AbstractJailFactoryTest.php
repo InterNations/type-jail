@@ -28,7 +28,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
     /** @var JailFactoryInterface */
     protected $factory;
 
-    public static function getInstanceScenarios()
+    public static function getInstanceScenarios(): array
     {
         return [
             [
@@ -95,16 +95,16 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
      * @param array $jailedMethods
      * @dataProvider getInstanceScenarios
      */
-    public function testJailScenarios($instance, $class, array $allowedMethods, array $jailedMethods)
+    public function testJailScenarios($instance, $class, array $allowedMethods, array $jailedMethods): void
     {
         $proxy = $this->factory->createInstanceJail($instance, $class);
-        $this->assertInternalType('object', $proxy);
+        $this->assertIsObject($proxy);
         $this->assertProxyInstanceOf($proxy, get_class($instance), $class);
 
         $this->assertMethodsCalls($proxy, $allowedMethods, $jailedMethods);
     }
 
-    public static function getAggregateScenarios()
+    public static function getAggregateScenarios(): array
     {
         $newParamList = [];
 
@@ -128,7 +128,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
      * @param array $jailedMethods
      * @dataProvider getAggregateScenarios
      */
-    public function testJailAggregate($list, $class, array $allowedMethods, array $jailedMethods)
+    public function testJailAggregate($list, $class, array $allowedMethods, array $jailedMethods): void
     {
         $proxies = $this->factory->createAggregateJail($list, $class);
         foreach ($proxies as $proxy) {
@@ -136,7 +136,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
         }
     }
 
-    public static function getHierarchyScenarios()
+    public static function getHierarchyScenarios(): array
     {
         return [
             [new ArrayIterator(), stdClass::class],
@@ -149,7 +149,7 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
      * @param string $class
      * @dataProvider getHierarchyScenarios
      */
-    public function testInvalidInheritanceHierarchy($instance, $class)
+    public function testInvalidInheritanceHierarchy($instance, $class): void
     {
         $this->expectException(HierarchyException::class);
         $this->expectExceptionMessage(
@@ -163,19 +163,19 @@ abstract class AbstractJailFactoryTest extends AbstractTestCase
         $this->factory->createInstanceJail($instance, $class);
     }
 
-    public function testCreateProxyFromAJail()
+    public function testCreateProxyFromAJail(): void
     {
         $proxy = $this->factory->createInstanceJail(new BaseClass(), BaseClass::class);
         $this->assertSame($proxy, $this->factory->createInstanceJail($proxy, BaseClass::class));
     }
 
-    public function testCreateProxyFromAProxy()
+    public function testCreateProxyFromAProxy(): void
     {
         $proxy = $this->createMock(ProxyInterface::class);
         $this->assertSame($proxy, $this->factory->createInstanceJail($proxy, ProxyInterface::class));
     }
 
-    private function assertMethodsCalls($proxy, array $allowedMethods, array $jailedMethods)
+    private function assertMethodsCalls($proxy, array $allowedMethods, array $jailedMethods): void
     {
         foreach ($allowedMethods as $allowedMethod) {
             $this->assertSame($allowedMethod, $proxy->{$allowedMethod}());

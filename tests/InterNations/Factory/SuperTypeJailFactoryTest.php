@@ -5,7 +5,7 @@ use InterNations\Component\TypeJail\Factory\SuperTypeJailFactory;
 
 class SuperTypeJailFactoryTest extends AbstractJailFactoryTest
 {
-    public function setUp()
+    protected function setUp(): void
     {
         $this->factory = new SuperTypeJailFactory();
     }

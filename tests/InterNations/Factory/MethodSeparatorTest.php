@@ -17,7 +17,7 @@ class MethodSeparatorTest extends AbstractTestCase
     /** @var MethodSeparator */
     private $separator;
 
-    public function setUp()
+    protected function setUp(): void
     {
         $this->separator = new MethodSeparator();
     }
