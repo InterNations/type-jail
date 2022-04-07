@@ -8,8 +8,9 @@
     "require-dev": {
         "phpunit/phpunit": "~9",
         "internations/testing-component": "~1",
-        "internations/kodierungsregelwerksammlung": "dev-master"
-    },
+        "internations/kodierungsregelwerksammlung": "~0.35",
+        "roave/backward-compatibility-check": "^5"
+	},
     "license": "MIT",
     "authors": [
         {
@@ -26,5 +27,10 @@
         "psr-4": {
             "InterNations\\Component\\TypeJail\\Tests\\": "tests/InterNations"
         }
-    }
+    },
+    "scripts": {
+        "tests": "phpunit",
+        "coding-style": "phpcs --standard=vendor/internations/kodierungsregelwerksammlung/ruleset.xml --exclude=InterNations.Naming.NamespaceName,Generic.PHP.RequireStrictTypes,InterNations.Naming.Final ./src/",
+        "backward-compatibility-check": "roave-backward-compatibility-check"
+  }
 }

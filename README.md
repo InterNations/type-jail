@@ -1,5 +1,4 @@
-# Type Jail [![Build Status](https://travis-ci.org/InterNations/type-jail.svg?branch=master)](https://travis-ci.org/InterNations/type-jail)
-
+# Type Jail [![Test](https://github.com/InterNations/type-jail/actions/workflows/tests.yaml/badge.svg)](https://github.com/InterNations/type-jail/actions/workflows/tests.yaml)
 Enforce super type contract of an object
 
 ## Usage
