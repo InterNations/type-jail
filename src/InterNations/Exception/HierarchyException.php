@@ -6,6 +6,7 @@ use ReflectionClass;
 
 class HierarchyException extends RuntimeException
 {
+	/** @no-named-arguments */
     public static function hierarchyMismatch(ReflectionClass $class, ReflectionClass $superClass): self
     {
         return new self(

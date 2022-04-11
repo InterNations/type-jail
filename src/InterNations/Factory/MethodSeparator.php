@@ -12,6 +12,7 @@ final class MethodSeparator implements MethodSeparatorInterface
      * Returns a pair. The first element contains a list of class methods, the second the super class methods
      *
      * @return string[]
+	 * @no-named-arguments
      */
     public function separateMethods(ReflectionClass $class, ReflectionClass $superClass): array
     {

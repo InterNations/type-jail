@@ -5,6 +5,9 @@ use ReflectionClass;
 
 interface MethodSeparatorInterface
 {
-    /** @return string[] */
+    /**
+	 * @return string[]
+	 * @no-named-arguments
+	 */
     public function separateMethods(ReflectionClass $class, ReflectionClass $superClass): array;
 }
