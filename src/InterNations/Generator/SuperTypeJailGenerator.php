@@ -27,7 +27,7 @@ use Laminas\Code\Reflection\MethodReflection;
 
 class SuperTypeJailGenerator implements ProxyGeneratorInterface
 {
-	/** @no-named-arguments */
+    /** @no-named-arguments */
     public function generate(
         ReflectionClass $originalClass,
         ClassGenerator $classGenerator,

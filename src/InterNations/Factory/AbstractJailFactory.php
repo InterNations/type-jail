@@ -19,13 +19,13 @@ abstract class AbstractJailFactory implements JailFactoryInterface
     private ?ProxyGeneratorInterface $generator = null;
     private ?MethodSeparatorInterface $methodSeparator = null;
 
-	/** @no-named-arguments */
+/** @no-named-arguments */
     public function __construct(?Configuration $configuration = null)
     {
         $this->configuration = $configuration ?: new Configuration();
     }
 
-	/** @no-named-arguments */
+    /** @no-named-arguments */
     final public function createInstanceJail(object $instance, string $class): object
     {
         if ($instance instanceof ProxyInterface) {
@@ -68,7 +68,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
     /**
      * @param object[] $instanceAggregate
      * @return object[]
-	 * @no-named-arguments
+     * @no-named-arguments
      */
     final public function createAggregateJail(iterable $instanceAggregate, string $class): iterable // @codingStandardsIgnoreLine
     {
@@ -77,10 +77,10 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         }
     }
 
-	/** @no-named-arguments */
+    /** @no-named-arguments */
     abstract protected function getBaseClass(ReflectionClass $class, ReflectionClass $superClass): ReflectionClass;
 
-	/** @no-named-arguments */
+    /** @no-named-arguments */
     abstract protected function getSurrogateClassName(ReflectionClass $class, ReflectionClass $superClass): string;
 
     abstract protected function createGenerator(): ProxyGeneratorInterface;
@@ -90,7 +90,7 @@ abstract class AbstractJailFactory implements JailFactoryInterface
         return $this->generator = $this->generator ?? $this->createGenerator();
     }
 
-	/** @no-named-arguments */
+    /** @no-named-arguments */
     private function generateProxyForSuperClass(ReflectionClass $class, ReflectionClass $superClass): string
     {
         $cacheKey = $this->getSurrogateClassName($class, $superClass);
@@ -123,9 +123,9 @@ abstract class AbstractJailFactory implements JailFactoryInterface
     }
 
     /**
-	 * @param mixed[] $proxyParameters
-	 * @no-named-arguments
-	 */
+     * @param mixed[] $proxyParameters
+     * @no-named-arguments
+     */
     private function generateProxyClass(
         string $proxyClassName,
         ReflectionClass $baseClass,
