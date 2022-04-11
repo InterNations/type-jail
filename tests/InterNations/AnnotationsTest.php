@@ -24,7 +24,6 @@ class AnnotationsTest extends TestCase
 			array_filter(
 				get_declared_classes(),
 				static function (string $class) {
-					var_dump($class);
 					return strpos($class, 'InterNations\\Component\\TypeJail\\') === 0;
 				}
 			)
