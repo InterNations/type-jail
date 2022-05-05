@@ -3,7 +3,7 @@
     "description": "Enforce type constraints",
     "require": {
         "php": ">=7.4",
-        "ocramius/proxy-manager": "~2"
+        "friendsofphp/proxy-manager-lts": "~1"
     },
     "require-dev": {
         "phpunit/phpunit": "~9",
