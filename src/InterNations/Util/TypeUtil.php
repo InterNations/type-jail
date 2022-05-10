@@ -7,6 +7,7 @@ final class TypeUtil
 {
     /**
      * Returns true if the given type is a super type
+     * @no-named-arguments
      */
     public static function isSuperTypeOf(ReflectionClass $class, ReflectionClass $superClass): bool
     {
@@ -19,6 +20,7 @@ final class TypeUtil
      * Return a list of super type names (interfaces and classes)
      *
      * @return string[]
+     * @no-named-arguments
      */
     public static function getSuperTypeNames(ReflectionClass $class): array
     {

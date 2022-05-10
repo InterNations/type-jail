@@ -5,6 +5,7 @@ use ReflectionClass;
 
 class JailException extends RuntimeException
 {
+    /** @no-named-arguments */
     public static function jailedMethod(string $methodName, string $class, string $proxyClass): self
     {
         return new self(

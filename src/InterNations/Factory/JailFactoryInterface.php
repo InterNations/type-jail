@@ -13,6 +13,7 @@ interface JailFactoryInterface
      *
      * @throws ExceptionInterface Any TypeJail exception
      * @throws HierarchyException If a hierarchy error occurs
+ * @no-named-arguments
      */
     public function createInstanceJail(object $instance, string $class): object;
 
@@ -21,6 +22,7 @@ interface JailFactoryInterface
      *
      * @param object[] $instanceAggregate
      * @return object[]
+ * @no-named-arguments
      */
     public function createAggregateJail(iterable $instanceAggregate, string $class): iterable;
 }
